@@ -10,11 +10,12 @@ class PowerUsageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-        color: background,
-      ),
+          shape: BoxShape.circle,
+          color: Colors.lightGreen,
+          border: Border.all(
+            width: 4,
+            color: Colors.grey
+          )),
       child: Center(
         child: Text(
           amount.toString(),
