@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import '../widgets/circle_progress.dart';
 import '../widgets/power_usage_tile.dart';
 import '../state/usages.dart';
 
@@ -23,15 +22,7 @@ class MonthlyUsageScreen extends StatelessWidget {
               Expanded(
                 child: Container(
                   color: Colors.lightBlue,
-                  height: 100,
-                  child: CustomPaint(
-                    foregroundPainter: CirclesProgress(),
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      color: Colors.teal,
-                    ),
-                  ),
+                  height: 150,
                 ),
               ),
             ],
@@ -39,7 +30,7 @@ class MonthlyUsageScreen extends StatelessWidget {
           Expanded(
             child: Container(
                 child: GridView.count(
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 60, vertical: 10),
               crossAxisCount: 2,
               crossAxisSpacing: 50,
               mainAxisSpacing: 20,
@@ -48,24 +39,32 @@ class MonthlyUsageScreen extends StatelessWidget {
                 PowerUsageTile(
                   loadedPowerUsage[0].counterMeterConsumption,
                   Colors.grey,
+                  60,
                 ),
                 PowerUsageTile(
                   loadedPowerUsage[0].counterMeterFeedIn,
                   Colors.blue,
+                  50,
                 ),
                 PowerUsageTile(
                   loadedPowerUsage[0].consumptionSonnenApp,
                   Colors.blue,
+                  75,
                 ),
                 PowerUsageTile(
                   loadedPowerUsage[0].consumptionGridSonnenApp,
                   Colors.blue,
+                  20,
                 ),
                 PowerUsageTile(
-                    loadedPowerUsage[0].consumptionHeating, Colors.blue),
+                  loadedPowerUsage[0].consumptionHeating,
+                  Colors.blue,
+                  83,
+                ),
                 PowerUsageTile(
                   loadedPowerUsage[0].consumptionWarmWater,
                   Colors.blue,
+                  30,
                 ),
               ],
             )),
