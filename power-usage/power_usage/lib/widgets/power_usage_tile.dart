@@ -21,6 +21,11 @@ class PowerUsageTile extends StatelessWidget {
         child: Center(
           child: Text(
             amount.toString(),
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColor
+            ),
           ),
         ),
       ),

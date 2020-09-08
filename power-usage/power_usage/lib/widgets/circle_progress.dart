@@ -10,13 +10,13 @@ class CirclesProgress extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint outerCircle = Paint()
-      ..strokeWidth = 8
+      ..strokeWidth = 3
       ..style = PaintingStyle.stroke
-      ..color = Colors.black;
+      ..color = Colors.grey[400];
 
     Paint completeArc = Paint()
       ..strokeWidth = 8
-      ..color = Colors.red
+      ..color = Color.fromARGB(255, 63 , 131, 192)
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
@@ -26,7 +26,6 @@ class CirclesProgress extends CustomPainter {
     canvas.drawCircle(center, radius, outerCircle);
 
     double angle = 2 * math.pi * (percentage / 100);
-    print(angle);
 
     canvas.drawArc(Rect.fromCircle(center: center, radius: radius),
         -math.pi / 2, angle, false, completeArc);
