@@ -32,7 +32,7 @@ class CirclesProgress extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
+  bool shouldRepaint(CirclesProgress oldDelegate) {
+    return oldDelegate.percentage != percentage;
   }
 }
