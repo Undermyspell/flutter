@@ -49,9 +49,10 @@ class _PowerUsageTileState extends State<PowerUsageTile>
             child: Text(
               widget.amount.toString(),
               style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor),
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
             ),
           ),
         ),
