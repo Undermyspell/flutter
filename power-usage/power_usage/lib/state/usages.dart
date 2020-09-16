@@ -32,7 +32,7 @@ class UsageService {
   Stream<Usage> get monthUsage => _monthUsage.stream;
   Stream<bool> get monthUsageIsLoading => _monthUsageIsLoading.stream;
 
-  void fetchUsageForMonth(int year, int month) async {
+  Future<void> fetchUsageForMonth(int year, int month) async {
     _monthUsageIsLoading.add(true);
     await Future.delayed(Duration(seconds: 2));
     _monthUsage.add(POWER_USAGES.firstWhere(
