@@ -39,22 +39,47 @@ class _PowerUsageTileState extends State<PowerUsageTile>
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.transparent,
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.purple[200].withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(10, 10), // changes position of shadow
+            ),
+          ],
         ),
-        child: CustomPaint(
-          foregroundPainter: CirclesProgress(animation.value),
-          child: Center(
-            child: Text(
-              widget.amount.toString(),
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
+        child: Column(
+          children: [
+            Text("hallo"),
+            SizedBox(
+              height: 40,
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.transparent,
+                ),
+                child: CustomPaint(
+                  foregroundPainter: CirclesProgress(animation.value),
+                  child: Center(
+                    child: Text(
+                      widget.amount.toString(),
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
       onTap: () {

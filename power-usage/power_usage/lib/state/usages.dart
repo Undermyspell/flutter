@@ -5,7 +5,7 @@ import '../models/usage.dart';
  // ignore: non_constant_identifier_names
  List<Usage> POWER_USAGES = [
   Usage(
-      counterMeterConsumption: 1200,
+      counterMeterConsumption: 900,
       counterMeterFeedIn: 301.3,
       consumptionSonnenApp: 400,
       consumptionGridSonnenApp: 200,

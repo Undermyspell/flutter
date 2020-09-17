@@ -12,11 +12,11 @@ class CirclesProgress extends CustomPainter {
     Paint outerCircle = Paint()
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke
-      ..color = Colors.grey[400];
+      ..color = Colors.purple[200];
 
     Paint completeArc = Paint()
       ..strokeWidth = 8
-      ..color = Color.fromARGB(255, 63 , 131, 192)
+      ..color = Colors.purple[400] //Color.fromARGB(255, 63 , 131, 192)
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 

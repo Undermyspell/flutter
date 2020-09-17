@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Stromverbrauch für Monate",
       theme: ThemeData(
-        primaryColor: const Color.fromARGB(255, 63 , 131, 192),
+        primaryColor: Colors.purple,
         accentColor: Colors.grey[500],
       ),
       home: MonthlyUsageScreen(),

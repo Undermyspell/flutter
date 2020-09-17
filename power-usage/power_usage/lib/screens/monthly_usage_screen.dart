@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import '../widgets/power_usage_tiles.dart';
 import '../widgets/power_usage_month_picker.dart';
 import '../state/usages.dart';
@@ -18,8 +19,6 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
   DateTime datePicked = DateTime.now();
 
   Future<void> fetchUsageForMonth(int year, int month) async {
-    print(month);
-    print(year);
     await usageService.fetchUsageForMonth(year, month);
   }
 
@@ -59,29 +58,29 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 70,
-                      alignment: Alignment.center,
-                      child: Container(
-                        height: 50,
-                        width: 200,
-                        child: PowerUsageMonthPicker(
-                          datePicked,
-                          setDate,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Container(
+              //         height: 70,
+              //         alignment: Alignment.center,
+              //         child: Container(
+              //           height: 50,
+              //           width: 200,
+              //           child: PowerUsageMonthPicker(
+              //             datePicked,
+              //             setDate,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Expanded(
                 child: StreamBuilder<bool>(
                     stream: usageService.monthUsageIsLoading,
                     builder: (context, snapshot) {
-                      return snapshot.hasData
+                      return !snapshot.hasData || snapshot.data
                           ? Center(
                               child: CircularProgressIndicator(
                                 backgroundColor: Theme.of(context).primaryColor,
@@ -94,7 +93,8 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(
         child: const Icon(
           Icons.add,
@@ -116,9 +116,13 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
                 onPressed: () {},
               ),
               IconButton(
-                icon: Icon(Icons.cloud),
+                icon: Icon(Icons.calendar_today),
                 color: Colors.white,
-                onPressed: () {},
+                onPressed: () async {
+                  final picked = await showMonthPicker(
+                      context: context, initialDate: datePicked);
+                  setDate(picked != null ? picked : datePicked);
+                },
               )
             ],
           ),

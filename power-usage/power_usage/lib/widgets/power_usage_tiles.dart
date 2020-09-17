@@ -27,41 +27,41 @@ class PowerUsageResultTiles extends StatelessWidget {
 
           if (snapshot.hasData) {
             return GridView.count(
-              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               crossAxisCount: 2,
-              crossAxisSpacing: 50,
-              mainAxisSpacing: 30,
-              childAspectRatio: 1 / 1,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+              childAspectRatio: 1 / 1.5,
               children: [
                 PowerUsageTile(
                   usage.counterMeterConsumption,
                   Colors.grey,
-                  60,
+                  usage.counterMeterConsumption / 10,
                 ),
                 PowerUsageTile(
                   usage.counterMeterFeedIn,
                   Colors.blue,
-                  50,
+                  usage.counterMeterFeedIn / 10,
                 ),
                 PowerUsageTile(
                   usage.consumptionSonnenApp,
                   Colors.blue,
-                  75,
+                  usage.consumptionSonnenApp /10,
                 ),
                 PowerUsageTile(
                   usage.consumptionGridSonnenApp,
                   Colors.blue,
-                  20,
+                  usage.consumptionGridSonnenApp / 10,
                 ),
                 PowerUsageTile(
                   usage.consumptionHeating,
                   Colors.blue,
-                  83,
+                  usage.consumptionHeating / 10,
                 ),
                 PowerUsageTile(
                   usage.consumptionWarmWater,
                   Colors.blue,
-                  30,
+                  usage.consumptionWarmWater / 10,
                 ),
               ],
             );
