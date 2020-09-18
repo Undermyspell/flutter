@@ -39,13 +39,13 @@ class _PowerUsageTileState extends State<PowerUsageTile>
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 0, vertical: 15),
         decoration: BoxDecoration(
-          color: Colors.grey[200],
+          color: Color.fromRGBO(38, 47, 92, 1),
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              color: Colors.purple[200].withOpacity(0.5),
+              color: Color.fromRGBO(38, 47, 92, 1).withOpacity(.5),
               spreadRadius: 1,
               blurRadius: 5,
               offset: Offset(10, 10), // changes position of shadow
@@ -57,13 +57,12 @@ class _PowerUsageTileState extends State<PowerUsageTile>
             Text(
               "hallo",
               style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor
+                fontSize: 20,
+                color: Colors.white
               ),
             ),
             SizedBox(
-              height: 40,
+              height: 20,
             ),
             Expanded(
               child: Container(

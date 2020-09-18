@@ -31,7 +31,7 @@ class PowerUsageResultTiles extends StatelessWidget {
               crossAxisCount: 2,
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
-              childAspectRatio: 1 / 1.5,
+              childAspectRatio: 1 / 1.2,
               children: [
                 PowerUsageTile(
                   usage.counterMeterConsumption,
