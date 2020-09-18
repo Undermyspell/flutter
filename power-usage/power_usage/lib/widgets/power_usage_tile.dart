@@ -41,11 +41,11 @@ class _PowerUsageTileState extends State<PowerUsageTile>
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 15),
         decoration: BoxDecoration(
-          color: Color.fromRGBO(38, 47, 92, 1),
+          color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              color: Color.fromRGBO(38, 47, 92, 1).withOpacity(.5),
+              color: Theme.of(context).primaryColor.withOpacity(.5),
               spreadRadius: 1,
               blurRadius: 5,
               offset: Offset(10, 10), // changes position of shadow
@@ -56,10 +56,7 @@ class _PowerUsageTileState extends State<PowerUsageTile>
           children: [
             Text(
               "hallo",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white
-              ),
+              style: TextStyle(fontSize: 20, color: Colors.white),
             ),
             SizedBox(
               height: 20,
