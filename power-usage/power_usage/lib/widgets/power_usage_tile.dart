@@ -54,9 +54,25 @@ class _PowerUsageTileState extends State<PowerUsageTile>
         ),
         child: Column(
           children: [
-            Text(
-              "hallo",
-              style: TextStyle(fontSize: 20, color: Colors.white),
+            Stack(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "hallo",
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 30),
+                  child: Icon(
+                    Icons.flight,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: 20,
@@ -68,14 +84,30 @@ class _PowerUsageTileState extends State<PowerUsageTile>
                   color: Colors.transparent,
                 ),
                 child: CustomPaint(
-                  foregroundPainter: CirclesProgress(animation.value),
+                  foregroundPainter: CirclesProgress(
+                    animation.value,
+                    Color.fromRGBO(60, 68, 108, 1),
+                    Theme.of(context).accentColor,
+                  ),
                   child: Center(
-                    child: Text(
-                      widget.amount.toString(),
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: widget.amount.round().toString(),
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "\nkwh",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white.withOpacity(.5),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

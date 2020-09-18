@@ -41,7 +41,8 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
         title: Text("Monatliche Übersicht"),
       ),
       body: RefreshIndicator(
-        color: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).accentColor,
+        color: Colors.white,
         onRefresh: () => fetchUsageForMonth(datePicked.year, datePicked.month),
         child: Container(
           decoration: BoxDecoration(
@@ -50,31 +51,13 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
               end: Alignment.bottomCenter,
               colors: [
                 Colors.white,
-                Colors.grey[300],
+                Colors.white,
               ],
             ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //         height: 70,
-              //         alignment: Alignment.center,
-              //         child: Container(
-              //           height: 50,
-              //           width: 200,
-              //           child: PowerUsageMonthPicker(
-              //             datePicked,
-              //             setDate,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               Expanded(
                 child: StreamBuilder<bool>(
                     stream: usageService.monthUsageIsLoading,
@@ -95,12 +78,12 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(
-        child: const Icon(
+        child: Icon(
           Icons.add,
           color: Colors.white,
         ),
         onPressed: () {},
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).accentColor,
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(

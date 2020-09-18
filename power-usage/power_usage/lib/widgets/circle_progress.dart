@@ -4,19 +4,21 @@ import 'dart:math' as math;
 class CirclesProgress extends CustomPainter {
 
   final double percentage;
+  final Color colorFullStroke;
+  final Color colorPartStroke;
 
-  CirclesProgress(this.percentage);
+  CirclesProgress(this.percentage, this.colorFullStroke, this.colorPartStroke);
 
   @override
   void paint(Canvas canvas, Size size) {
     Paint outerCircle = Paint()
-      ..strokeWidth = 3
+      ..strokeWidth = 8
       ..style = PaintingStyle.stroke
-      ..color = Colors.purple[200];
+      ..color = colorFullStroke;
 
     Paint completeArc = Paint()
       ..strokeWidth = 8
-      ..color = Colors.purple[400] //Color.fromARGB(255, 63 , 131, 192)
+      ..color = colorPartStroke
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
