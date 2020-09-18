@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import '../widgets/power_usage_tiles.dart';
-import '../widgets/power_usage_month_picker.dart';
 import '../state/usages.dart';
 
 class MonthlyUsageScreen extends StatefulWidget {

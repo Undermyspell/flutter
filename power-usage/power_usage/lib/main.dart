@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.purple,
         accentColor: Colors.grey[500],
+        fontFamily: "Montserrat"
       ),
       home: MonthlyUsageScreen(),
       routes: {MonthlyUsageScreen.routeName: (ctx) => MonthlyUsageScreen()},

@@ -54,7 +54,14 @@ class _PowerUsageTileState extends State<PowerUsageTile>
         ),
         child: Column(
           children: [
-            Text("hallo"),
+            Text(
+              "hallo",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor
+              ),
+            ),
             SizedBox(
               height: 40,
             ),
