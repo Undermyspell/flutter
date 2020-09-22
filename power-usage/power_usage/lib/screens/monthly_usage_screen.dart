@@ -1,10 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:power_usage/screens/edit_monthly_usage_screen.dart';
 import '../widgets/power_usage_tiles.dart';
 import '../state/usages.dart';
 
@@ -85,43 +83,7 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
           color: Colors.white,
         ),
         onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) => new BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: AlertDialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0)),
-                  backgroundColor: Colors.white,
-                  content: Container(
-                    height: MediaQuery.of(context).size.height / 2,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  actions: [
-                    FlatButton(
-                      child: Text("ok"),
-                      onPressed: () {},
-                    ),
-                    FlatButton(
-                      child: Text("cancel"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    )
-                  ],
-                )),
-          );
+          Navigator.of(context).pushNamed(EditMonthlyUsageScreen.routeName);
         },
         backgroundColor: Theme.of(context).accentColor,
       ),

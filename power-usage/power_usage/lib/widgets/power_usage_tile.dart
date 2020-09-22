@@ -77,43 +77,7 @@ class _PowerUsageTileState extends State<PowerUsageTile>
             SizedBox(
               height: 20,
             ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.transparent,
-                ),
-                child: CustomPaint(
-                  foregroundPainter: CirclesProgress(
-                    animation.value,
-                    Color.fromRGBO(60, 68, 108, 1),
-                    Theme.of(context).accentColor,
-                  ),
-                  child: Center(
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: widget.amount.round().toString(),
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: "\nkwh",
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white.withOpacity(.5),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            AnimatedCircleWithText(animation: animation, amount: widget.amount),
           ],
         ),
       ),
@@ -122,6 +86,58 @@ class _PowerUsageTileState extends State<PowerUsageTile>
             ? controller.reverse()
             : controller.forward();
       },
+    );
+  }
+}
+
+class AnimatedCircleWithText extends StatelessWidget {
+  const AnimatedCircleWithText({
+    Key key,
+    @required this.animation,
+    @required this.amount,
+  }) : super(key: key);
+
+  final Animation<double> animation;
+  final double amount;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.transparent,
+        ),
+        child: CustomPaint(
+          foregroundPainter: CirclesProgress(
+            animation.value,
+            Color.fromRGBO(60, 68, 108, 1),
+            Theme.of(context).accentColor,
+          ),
+          child: Center(
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: amount.round().toString(),
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                children: [
+                  TextSpan(
+                    text: "\nkwh",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white.withOpacity(.5),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

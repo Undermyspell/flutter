@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import './screens/edit_monthly_usage_screen.dart';
 import './state/usages.dart';
 import './screens/monthly_usage_screen.dart';
 
@@ -21,7 +22,10 @@ class MyApp extends StatelessWidget {
           accentColor: Color.fromRGBO(255, 28, 146, 1),
           fontFamily: "Montserrat"),
       home: MonthlyUsageScreen(),
-      routes: {MonthlyUsageScreen.routeName: (ctx) => MonthlyUsageScreen()},
+      routes: {
+        MonthlyUsageScreen.routeName: (ctx) => MonthlyUsageScreen(),
+        EditMonthlyUsageScreen.routeName: (ctx) => EditMonthlyUsageScreen(),
+      },
     );
   }
 }
