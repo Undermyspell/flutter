@@ -25,7 +25,12 @@ class EditMonthlyUsageScreen extends StatelessWidget {
 
   void _saveForm() {
     _formKey.currentState.save();
-    print(_editedUsage);
+    print(_editedUsage.counterMeterConsumption);
+    print(_editedUsage.counterMeterFeedIn);
+    print(_editedUsage.consumptionHeating);
+    print(_editedUsage.consumptionWarmWater);
+    print(_editedUsage.consumptionSonnenApp);
+    print(_editedUsage.consumptionGridSonnenApp);
   }
 
   @override
@@ -70,6 +75,22 @@ class EditMonthlyUsageScreen extends StatelessWidget {
                     ),
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
+                    validator: (value) => _inputValidator(value),
+                    onSaved: (value) {
+                      _editedUsage = Usage(
+                          counterMeterConsumption:
+                              _editedUsage.counterMeterConsumption,
+                          counterMeterFeedIn: double.parse(value),
+                          month: _editedUsage.month,
+                          year: _editedUsage.year,
+                          consumptionWarmWater:
+                              _editedUsage.consumptionWarmWater,
+                          consumptionSonnenApp:
+                              _editedUsage.consumptionSonnenApp,
+                          consumptionHeating: _editedUsage.consumptionHeating,
+                          consumptionGridSonnenApp:
+                              _editedUsage.consumptionGridSonnenApp);
+                    },
                   ),
                   TextFormField(
                     decoration: InputDecoration(
@@ -77,6 +98,22 @@ class EditMonthlyUsageScreen extends StatelessWidget {
                     ),
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
+                    validator: (value) => _inputValidator(value),
+                    onSaved: (value) {
+                      _editedUsage = Usage(
+                          counterMeterConsumption:
+                              _editedUsage.counterMeterConsumption,
+                          counterMeterFeedIn: _editedUsage.counterMeterFeedIn,
+                          month: _editedUsage.month,
+                          year: _editedUsage.year,
+                          consumptionWarmWater:
+                              _editedUsage.consumptionWarmWater,
+                          consumptionSonnenApp:
+                              _editedUsage.consumptionSonnenApp,
+                          consumptionHeating: double.parse(value),
+                          consumptionGridSonnenApp:
+                              _editedUsage.consumptionGridSonnenApp);
+                    },
                   ),
                   TextFormField(
                     decoration: InputDecoration(
@@ -84,6 +121,21 @@ class EditMonthlyUsageScreen extends StatelessWidget {
                     ),
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
+                    validator: (value) => _inputValidator(value),
+                    onSaved: (value) {
+                      _editedUsage = Usage(
+                          counterMeterConsumption:
+                              _editedUsage.counterMeterConsumption,
+                          counterMeterFeedIn: _editedUsage.counterMeterFeedIn,
+                          month: _editedUsage.month,
+                          year: _editedUsage.year,
+                          consumptionWarmWater: double.parse(value),
+                          consumptionSonnenApp:
+                              _editedUsage.consumptionSonnenApp,
+                          consumptionHeating: _editedUsage.consumptionHeating,
+                          consumptionGridSonnenApp:
+                              _editedUsage.consumptionGridSonnenApp);
+                    },
                   ),
                   TextFormField(
                     decoration: InputDecoration(
@@ -91,6 +143,21 @@ class EditMonthlyUsageScreen extends StatelessWidget {
                     ),
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
+                    validator: (value) => _inputValidator(value),
+                    onSaved: (value) {
+                      _editedUsage = Usage(
+                          counterMeterConsumption:
+                              _editedUsage.counterMeterConsumption,
+                          counterMeterFeedIn: _editedUsage.counterMeterFeedIn,
+                          month: _editedUsage.month,
+                          year: _editedUsage.year,
+                          consumptionWarmWater:
+                              _editedUsage.consumptionWarmWater,
+                          consumptionSonnenApp: double.parse(value),
+                          consumptionHeating: _editedUsage.consumptionHeating,
+                          consumptionGridSonnenApp:
+                              _editedUsage.consumptionGridSonnenApp);
+                    },
                   ),
                   TextFormField(
                     decoration: InputDecoration(
@@ -98,6 +165,21 @@ class EditMonthlyUsageScreen extends StatelessWidget {
                     ),
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
+                    validator: (value) => _inputValidator(value),
+                    onSaved: (value) {
+                      _editedUsage = Usage(
+                        counterMeterConsumption:
+                            _editedUsage.counterMeterConsumption,
+                        counterMeterFeedIn: _editedUsage.counterMeterFeedIn,
+                        month: _editedUsage.month,
+                        year: _editedUsage.year,
+                        consumptionWarmWater: _editedUsage.consumptionWarmWater,
+                        consumptionSonnenApp:
+                            _editedUsage.consumptionSonnenApp,
+                        consumptionHeating: _editedUsage.consumptionHeating,
+                        consumptionGridSonnenApp: double.parse(value),
+                      );
+                    },
                     onFieldSubmitted: (_) {
                       _saveForm();
                     },
