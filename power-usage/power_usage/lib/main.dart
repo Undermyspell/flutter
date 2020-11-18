@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         MonthlyUsageScreen.routeName: (ctx) => MonthlyUsageScreen(),
         EditMonthlyUsageScreen.routeName: (ctx) => EditMonthlyUsageScreen(),
       },
+      debugShowCheckedModeBanner: false
     );
   }
 }

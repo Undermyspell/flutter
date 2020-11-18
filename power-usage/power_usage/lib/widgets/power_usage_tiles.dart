@@ -37,31 +37,37 @@ class PowerUsageResultTiles extends StatelessWidget {
                   usage.counterMeterConsumption,
                   Colors.grey,
                   usage.counterMeterConsumption / 10,
+                  "Zähler Verbrauch"
                 ),
                 PowerUsageTile(
                   usage.counterMeterFeedIn,
                   Colors.blue,
                   usage.counterMeterFeedIn / 10,
+                  "Zähler Einspeisung"
                 ),
                 PowerUsageTile(
                   usage.consumptionSonnenApp,
                   Colors.blue,
                   usage.consumptionSonnenApp /10,
+                  "Sonnen Gesamt"
                 ),
                 PowerUsageTile(
                   usage.consumptionGridSonnenApp,
                   Colors.blue,
                   usage.consumptionGridSonnenApp / 10,
+                  "Sonnen Netzbezug"
                 ),
                 PowerUsageTile(
                   usage.consumptionHeating,
                   Colors.blue,
                   usage.consumptionHeating / 10,
+                  "Heizung"
                 ),
                 PowerUsageTile(
                   usage.consumptionWarmWater,
                   Colors.blue,
                   usage.consumptionWarmWater / 10,
+                  "Warmwasser"
                 ),
               ],
             );

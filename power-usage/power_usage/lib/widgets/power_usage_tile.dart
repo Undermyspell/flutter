@@ -5,8 +5,10 @@ class PowerUsageTile extends StatefulWidget {
   final Color background;
   final double amount;
   final double percentage;
+  final String text;
 
-  const PowerUsageTile(this.amount, this.background, this.percentage);
+  const PowerUsageTile(
+      this.amount, this.background, this.percentage, this.text);
 
   @override
   _PowerUsageTileState createState() => _PowerUsageTileState();
@@ -54,26 +56,19 @@ class _PowerUsageTileState extends State<PowerUsageTile>
         ),
         child: Column(
           children: [
-            Stack(
-              children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Icon(
+                      Icons.power,
+                      color: Colors.white,
+                    ),
                     Text(
-                      "hallo",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      widget.text,
+                      style: TextStyle(fontSize: 10, color: Colors.white),
                     ),
                   ],
                 ),
-                Container(
-                  margin: EdgeInsets.only(left: 30),
-                  child: Icon(
-                    Icons.flight,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
             SizedBox(
               height: 20,
             ),

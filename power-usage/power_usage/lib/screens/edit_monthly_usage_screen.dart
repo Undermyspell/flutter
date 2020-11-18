@@ -2,8 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../models/usage.dart';
 
-class EditMonthlyUsageScreen extends StatelessWidget {
+class EditMonthlyUsageScreen extends StatefulWidget {
   static const String routeName = "/editmonthlyusage";
+
+  @override
+  _EditMonthlyUsageScreenState createState() => _EditMonthlyUsageScreenState();
+}
+
+class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
   final _formKey = GlobalKey<FormState>();
 
   var _editedUsage = Usage(
