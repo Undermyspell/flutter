@@ -201,12 +201,12 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                         textColor: Colors.white,
                         onPressed: () {
                           _saveForm();
-                          // if (_formKey.currentState.validate()) {
-                          //   Scaffold.of(context).showSnackBar(SnackBar(
-                          //     content: Text('Processing Data'),
-                          //     backgroundColor: Theme.of(context).accentColor,
-                          //   ));
-                          // }
+                          if (_formKey.currentState.validate()) {
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text('Processing Data'),
+                              backgroundColor: Theme.of(context).accentColor,
+                            ));
+                          }
                         },
                         child: Text(
                           "Speichern",
