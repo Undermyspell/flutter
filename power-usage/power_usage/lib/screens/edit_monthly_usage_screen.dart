@@ -185,10 +185,7 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                         consumptionHeating: _editedUsage.consumptionHeating,
                         consumptionGridSonnenApp: double.parse(value),
                       );
-                    },
-                    onFieldSubmitted: (_) {
-                      _saveForm();
-                    },
+                    }
                   ),
                   SizedBox(
                     height: 10,
@@ -200,8 +197,8 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                         color: Theme.of(context).accentColor,
                         textColor: Colors.white,
                         onPressed: () {
-                          _saveForm();
                           if (_formKey.currentState.validate()) {
+                            _saveForm();
                             Scaffold.of(context).showSnackBar(SnackBar(
                               content: Text('Processing Data'),
                               backgroundColor: Theme.of(context).accentColor,
