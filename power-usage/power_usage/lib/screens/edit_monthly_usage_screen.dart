@@ -11,6 +11,11 @@ class EditMonthlyUsageScreen extends StatefulWidget {
 
 class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
   final _formKey = GlobalKey<FormState>();
+  final focusCounterMeterFeedIn = FocusNode();
+  final focusConsumptionHeating = FocusNode();
+  final focusConsumptionSonnenApp = FocusNode();
+  final focusConsumptionWarmWater = FocusNode();
+  final focusConsumptionGridSonnenApp = FocusNode();
 
   var _editedUsage = Usage(
       consumptionGridSonnenApp: 0,
@@ -74,12 +79,15 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                           consumptionGridSonnenApp:
                               _editedUsage.consumptionGridSonnenApp);
                     },
+                    onFieldSubmitted: (v) => FocusScope.of(context)
+                        .requestFocus(focusCounterMeterFeedIn),
                   ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: "Einspeisung Zählerstand 1. des Monats:",
                     ),
                     textInputAction: TextInputAction.next,
+                    focusNode: focusCounterMeterFeedIn,
                     keyboardType: TextInputType.number,
                     validator: (value) => _inputValidator(value),
                     onSaved: (value) {
@@ -97,11 +105,14 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                           consumptionGridSonnenApp:
                               _editedUsage.consumptionGridSonnenApp);
                     },
+                    onFieldSubmitted: (v) => FocusScope.of(context)
+                        .requestFocus(focusConsumptionHeating),
                   ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: "Verbrauch Heizung:",
                     ),
+                    focusNode: focusConsumptionHeating,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
                     validator: (value) => _inputValidator(value),
@@ -120,11 +131,14 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                           consumptionGridSonnenApp:
                               _editedUsage.consumptionGridSonnenApp);
                     },
+                    onFieldSubmitted: (v) => FocusScope.of(context)
+                        .requestFocus(focusConsumptionWarmWater),
                   ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: "Verbrauch Warmwasser:",
                     ),
+                    focusNode: focusConsumptionWarmWater,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
                     validator: (value) => _inputValidator(value),
@@ -142,11 +156,14 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                           consumptionGridSonnenApp:
                               _editedUsage.consumptionGridSonnenApp);
                     },
+                    onFieldSubmitted: (v) => FocusScope.of(context)
+                        .requestFocus(focusConsumptionSonnenApp),
                   ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: "Verbrauch Sonnen App:",
                     ),
+                    focusNode: focusConsumptionSonnenApp,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
                     validator: (value) => _inputValidator(value),
@@ -164,13 +181,16 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                           consumptionGridSonnenApp:
                               _editedUsage.consumptionGridSonnenApp);
                     },
+                    onFieldSubmitted: (v) => FocusScope.of(context)
+                        .requestFocus(focusConsumptionGridSonnenApp),
                   ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: "Netzbezug Sonnen App:",
                     ),
-                    textInputAction: TextInputAction.next,
+                    textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
+                    focusNode: focusConsumptionGridSonnenApp,
                     validator: (value) => _inputValidator(value),
                     onSaved: (value) {
                       _editedUsage = Usage(
@@ -180,12 +200,20 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                         month: _editedUsage.month,
                         year: _editedUsage.year,
                         consumptionWarmWater: _editedUsage.consumptionWarmWater,
-                        consumptionSonnenApp:
-                            _editedUsage.consumptionSonnenApp,
+                        consumptionSonnenApp: _editedUsage.consumptionSonnenApp,
                         consumptionHeating: _editedUsage.consumptionHeating,
                         consumptionGridSonnenApp: double.parse(value),
                       );
-                    }
+                    },
+                    onFieldSubmitted: (_) {
+                      if (_formKey.currentState.validate()) {
+                        _saveForm();
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text('Processing Data'),
+                          backgroundColor: Theme.of(context).accentColor,
+                        ));
+                      }
+                    },
                   ),
                   SizedBox(
                     height: 10,
