@@ -1,9 +1,10 @@
 import 'package:rxdart/rxdart.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/usage.dart';
 
- // ignore: non_constant_identifier_names
- List<Usage> POWER_USAGES = [
+// ignore: non_constant_identifier_names
+List<Usage> POWER_USAGES = [
   Usage(
       counterMeterConsumption: 900,
       counterMeterFeedIn: 301.3,
@@ -25,7 +26,10 @@ import '../models/usage.dart';
 ];
 
 class UsageService {
-  final BehaviorSubject<Usage> _monthUsage = BehaviorSubject.seeded(Usage.empty());
+  CollectionReference usages = FirebaseFirestore.instance.collection('usages');
+
+  final BehaviorSubject<Usage> _monthUsage =
+      BehaviorSubject.seeded(Usage.empty());
   final BehaviorSubject<bool> _monthUsageIsLoading =
       BehaviorSubject.seeded(false);
 
@@ -34,10 +38,20 @@ class UsageService {
 
   Future<void> fetchUsageForMonth(int year, int month) async {
     _monthUsageIsLoading.add(true);
-    await Future.delayed(Duration(seconds: 2));
-    _monthUsage.add(POWER_USAGES.firstWhere(
-        (usage) => usage.month == month && usage.year == year,
-        orElse: () => null));
+
+    var queryResult = await usages
+        .where("year", isEqualTo: year)
+        .where("month", isEqualTo: month)
+        .limit(1)
+        .get();
+
+    var usage = queryResult.docs
+        .map((e) => Usage.fromFirestore(e))
+        .toList()
+        .firstWhere((usage) => usage != null, orElse: () => null);
+
+    _monthUsage.add(usage);
+
     _monthUsageIsLoading.add(false);
   }
 

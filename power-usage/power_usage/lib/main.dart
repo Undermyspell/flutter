@@ -9,7 +9,7 @@ GetIt getIt = GetIt.instance;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  getIt.registerSingleton<UsageService>(UsageService());
+
   runApp(MyApp());
 }
 
@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.done) {
+            getIt.registerSingleton<UsageService>(UsageService());
             return MaterialApp(
                 title: "Stromverbrauch für Monate",
                 theme: ThemeData(
