@@ -55,6 +55,19 @@ class UsageService {
     _monthUsageIsLoading.add(false);
   }
 
+  Future<void> saveMonthlyUsage(Usage usage) async {
+    return usages.add({
+      "consumptionGridSonnenApp": usage.consumptionGridSonnenApp,
+      "consumptionHeating": usage.consumptionHeating,
+      "consumptionSonnenApp": usage.consumptionSonnenApp,
+      "consumptionWarmWater": usage.consumptionWarmWater,
+      "counterMeterConsumption": usage.counterMeterConsumption,
+      "counterMeterFeedIn": usage.counterMeterFeedIn,
+      "month": usage.month,
+      "year": usage.year
+    });
+  }
+
   void dispose() {
     _monthUsage.close();
     _monthUsageIsLoading.close();

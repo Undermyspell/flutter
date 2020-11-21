@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import '../models/usage.dart';
+import '../state/usages.dart';
 
 class EditMonthlyUsageScreen extends StatefulWidget {
   static const String routeName = "/editmonthlyusage";
@@ -10,12 +14,30 @@ class EditMonthlyUsageScreen extends StatefulWidget {
 }
 
 class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
+  final usageService = GetIt.instance.get<UsageService>();
   final _formKey = GlobalKey<FormState>();
   final focusCounterMeterFeedIn = FocusNode();
   final focusConsumptionHeating = FocusNode();
   final focusConsumptionSonnenApp = FocusNode();
   final focusConsumptionWarmWater = FocusNode();
   final focusConsumptionGridSonnenApp = FocusNode();
+  final DateFormat formatter = DateFormat('MMMM yyyy');
+  DateTime datePicked = DateTime.now();
+  setDate(DateTime date) {
+    _editedUsage = Usage(
+        consumptionGridSonnenApp: _editedUsage.consumptionGridSonnenApp,
+        consumptionHeating: _editedUsage.consumptionHeating,
+        consumptionSonnenApp: _editedUsage.consumptionGridSonnenApp,
+        consumptionWarmWater: _editedUsage.consumptionWarmWater,
+        counterMeterConsumption: _editedUsage.counterMeterConsumption,
+        counterMeterFeedIn: _editedUsage.counterMeterFeedIn,
+        month: date.month,
+        year: date.year);
+
+    setState(() {
+      datePicked = date;
+    });
+  }
 
   var _editedUsage = Usage(
       consumptionGridSonnenApp: 0,
@@ -34,14 +56,9 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
     return null;
   }
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     _formKey.currentState.save();
-    print(_editedUsage.counterMeterConsumption);
-    print(_editedUsage.counterMeterFeedIn);
-    print(_editedUsage.consumptionHeating);
-    print(_editedUsage.consumptionWarmWater);
-    print(_editedUsage.consumptionSonnenApp);
-    print(_editedUsage.consumptionGridSonnenApp);
+    await usageService.saveMonthlyUsage(_editedUsage);
   }
 
   @override
@@ -215,6 +232,26 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                       }
                     },
                   ),
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.calendar_today),
+                        onPressed: () async {
+                          final picked = await showMonthPicker(
+                              context: context, initialDate: datePicked);
+                          setDate(picked != null ? picked : datePicked);
+                        },
+                      ),
+                      Text(
+                        formatter.format(datePicked),
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -224,11 +261,17 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                       RaisedButton(
                         color: Theme.of(context).accentColor,
                         textColor: Colors.white,
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            _saveForm();
                             Scaffold.of(context).showSnackBar(SnackBar(
                               content: Text('Processing Data'),
+                              backgroundColor: Theme.of(context).accentColor,
+                            ));
+
+                            await _saveForm();
+
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text('Saved!'),
                               backgroundColor: Theme.of(context).accentColor,
                             ));
                           }
