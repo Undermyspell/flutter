@@ -222,14 +222,22 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                         consumptionGridSonnenApp: double.parse(value),
                       );
                     },
-                    onFieldSubmitted: (_) {
+                    onFieldSubmitted: (_) async {
                       if (_formKey.currentState.validate()) {
-                        _saveForm();
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text('Processing Data'),
-                          backgroundColor: Theme.of(context).accentColor,
-                        ));
-                      }
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                                'Saving usage for ${_editedUsage.year}/${_editedUsage.month}'),
+                            backgroundColor: Theme.of(context).accentColor,
+                          ));
+                          await _saveForm();
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'Saved usage for ${_editedUsage.year}/${_editedUsage.month}'),
+                              backgroundColor: Colors.green));
+                          usageService.fetchUsageForMonth(
+                              _editedUsage.year, _editedUsage.month);
+                          Navigator.pop(context);
+                        }
                     },
                   ),
                   Row(
@@ -264,16 +272,18 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text('Processing Data'),
+                              content: Text(
+                                  'Saving usage for ${_editedUsage.year}/${_editedUsage.month}'),
                               backgroundColor: Theme.of(context).accentColor,
                             ));
-
                             await _saveForm();
-
                             Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text('Saved!'),
-                              backgroundColor: Theme.of(context).accentColor,
-                            ));
+                                content: Text(
+                                    'Saved usage for ${_editedUsage.year}/${_editedUsage.month}'),
+                                backgroundColor: Colors.green));
+                            usageService.fetchUsageForMonth(
+                                _editedUsage.year, _editedUsage.month);
+                            Navigator.pop(context);
                           }
                         },
                         child: Text(
