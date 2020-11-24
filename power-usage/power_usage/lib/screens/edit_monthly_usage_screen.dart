@@ -56,9 +56,29 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
     return null;
   }
 
-  Future<void> _saveForm() async {
+  Future<void> _saveForm(BuildContext context) async {
     _formKey.currentState.save();
+    showProcessingSnackbar(context);
     await usageService.saveMonthlyUsage(_editedUsage);
+    showSaveSuccessSnackbar(context);
+    usageService.fetchUsageForMonth(_editedUsage.year, _editedUsage.month);
+    Navigator.pop(context);
+  }
+
+  void showProcessingSnackbar(BuildContext context) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content:
+          Text('Saving usage for ${_editedUsage.year}/${_editedUsage.month}'),
+      backgroundColor: Theme.of(context).accentColor,
+    ));
+  }
+
+  void showSaveSuccessSnackbar(BuildContext context) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+        content:
+            Text('Saved usage for ${_editedUsage.year}/${_editedUsage.month}'),
+        backgroundColor: Colors.green));
+    usageService.fetchUsageForMonth(_editedUsage.year, _editedUsage.month);
   }
 
   @override
@@ -224,41 +244,32 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                     },
                     onFieldSubmitted: (_) async {
                       if (_formKey.currentState.validate()) {
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text(
-                                'Saving usage for ${_editedUsage.year}/${_editedUsage.month}'),
-                            backgroundColor: Theme.of(context).accentColor,
-                          ));
-                          await _saveForm();
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                  'Saved usage for ${_editedUsage.year}/${_editedUsage.month}'),
-                              backgroundColor: Colors.green));
-                          usageService.fetchUsageForMonth(
-                              _editedUsage.year, _editedUsage.month);
-                          Navigator.pop(context);
-                        }
+                        _saveForm(context);
+                      }
                     },
                   ),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.calendar_today),
-                        onPressed: () async {
-                          final picked = await showMonthPicker(
-                              context: context, initialDate: datePicked);
-                          setDate(picked != null ? picked : datePicked);
-                        },
+                  InkWell(
+                    onTap: () async {
+                      final picked = await showMonthPicker(
+                          context: context, initialDate: datePicked);
+                      setDate(picked != null ? picked : datePicked);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Row(
+                        children: [
+                          Icon(Icons.calendar_today),
+                          Text(
+                            formatter.format(datePicked),
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        formatter.format(datePicked),
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: false,
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                   SizedBox(
                     height: 10,
@@ -271,19 +282,7 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                         textColor: Colors.white,
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                  'Saving usage for ${_editedUsage.year}/${_editedUsage.month}'),
-                              backgroundColor: Theme.of(context).accentColor,
-                            ));
-                            await _saveForm();
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    'Saved usage for ${_editedUsage.year}/${_editedUsage.month}'),
-                                backgroundColor: Colors.green));
-                            usageService.fetchUsageForMonth(
-                                _editedUsage.year, _editedUsage.month);
-                            Navigator.pop(context);
+                            _saveForm(context);
                           }
                         },
                         child: Text(

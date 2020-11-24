@@ -1,29 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../models/usage.dart';
-
-// ignore: non_constant_identifier_names
-List<Usage> POWER_USAGES = [
-  Usage(
-      counterMeterConsumption: 900,
-      counterMeterFeedIn: 301.3,
-      consumptionSonnenApp: 400,
-      consumptionGridSonnenApp: 200,
-      consumptionHeating: 300,
-      consumptionWarmWater: 50,
-      month: 1,
-      year: 2020),
-  Usage(
-      counterMeterConsumption: 3500,
-      counterMeterFeedIn: 899.4,
-      consumptionSonnenApp: 345.44,
-      consumptionGridSonnenApp: 201.33,
-      consumptionHeating: 434.3,
-      consumptionWarmWater: 51.2,
-      month: 2,
-      year: 2020)
-];
 
 class UsageService {
   CollectionReference usages = FirebaseFirestore.instance.collection('usages');
@@ -46,7 +23,7 @@ class UsageService {
         .get();
 
     var usage = queryResult.docs
-        .map((e) => Usage.fromFirestore(e))
+        .map((doc) => Usage.fromFirestore(doc))
         .toList()
         .firstWhere((usage) => usage != null, orElse: () => null);
 
