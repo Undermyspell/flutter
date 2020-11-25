@@ -21,8 +21,7 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
   final focusConsumptionSonnenApp = FocusNode();
   final focusConsumptionWarmWater = FocusNode();
   final focusConsumptionGridSonnenApp = FocusNode();
-  final DateFormat formatter = DateFormat('MMMM yyyy');
-  DateTime datePicked = DateTime.now();
+
   setDate(DateTime date) {
     _editedUsage = Usage(
         consumptionGridSonnenApp: _editedUsage.consumptionGridSonnenApp,
@@ -33,10 +32,6 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
         counterMeterFeedIn: _editedUsage.counterMeterFeedIn,
         month: date.month,
         year: date.year);
-
-    setState(() {
-      datePicked = date;
-    });
   }
 
   var _editedUsage = Usage(
@@ -248,28 +243,16 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                       }
                     },
                   ),
-                  InkWell(
-                    onTap: () async {
-                      final picked = await showMonthPicker(
-                          context: context, initialDate: datePicked);
-                      setDate(picked != null ? picked : datePicked);
+                  MonthPickerFormField(
+                    context: context,
+                    onSaved: setDate,
+                    validator: (value) {
+                      if (value.year == 1900) {
+                        return "Bitte einen Monat wählen";
+                      }
+                      return null;
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Row(
-                        children: [
-                          Icon(Icons.calendar_today),
-                          Text(
-                            formatter.format(datePicked),
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: false,
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    initialValue: DateTime(1900),
                   ),
                   SizedBox(
                     height: 10,
@@ -302,4 +285,58 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
       ),
     );
   }
+}
+
+class MonthPickerFormField extends FormField<DateTime> {
+  final DateTime datePicked = DateTime.now();
+  final DateFormat formatter = DateFormat('MMMM yyyy');
+
+  MonthPickerFormField(
+      {BuildContext context,
+      FormFieldSetter<DateTime> onSaved,
+      FormFieldValidator<DateTime> validator,
+      DateTime initialValue,
+      bool autovalidate = false})
+      : super(
+            onSaved: onSaved,
+            validator: validator,
+            initialValue: initialValue,
+            autovalidate: autovalidate,
+            builder: (FormFieldState<DateTime> state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      final prev = state.value;
+                      final picked = await showMonthPicker(
+                          context: context, initialDate: initialValue);
+                      state.didChange(picked != null ? picked : prev);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Row(
+                        children: [
+                          Icon(Icons.calendar_today),
+                          Text(
+                            DateFormat('MMMM yyyy').format(state.value),
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  state.hasError
+                      ? Text(
+                          state.errorText,
+                          style: TextStyle(color: Colors.red),
+                        )
+                      : Container()
+                ],
+              );
+            });
 }
