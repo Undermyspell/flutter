@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:power_usage/screens/edit_monthly_usage_screen.dart';
+import 'package:power_usage/screens/stats_screen.dart';
 import '../widgets/power_usage_tiles.dart';
 import '../state/usages.dart';
 
@@ -97,7 +98,9 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
               IconButton(
                 icon: Icon(Icons.home),
                 color: Colors.white,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(MonthlyUsageScreen.routeName);
+                },
               ),
               IconButton(
                 icon: Icon(Icons.calendar_today),
@@ -107,6 +110,12 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
                       context: context, initialDate: datePicked);
                   setDate(picked != null ? picked : datePicked);
                 },
+              ),
+              IconButton(
+                icon: Icon(Icons.show_chart),
+                color: Colors.white,
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(StatsScreen.routeName),
               )
             ],
           ),

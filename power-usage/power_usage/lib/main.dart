@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:power_usage/screens/stats_screen.dart';
 import './screens/edit_monthly_usage_screen.dart';
 import './state/usages.dart';
 import './screens/monthly_usage_screen.dart';
@@ -36,8 +37,8 @@ class MyApp extends StatelessWidget {
                 home: MonthlyUsageScreen(),
                 routes: {
                   MonthlyUsageScreen.routeName: (ctx) => MonthlyUsageScreen(),
-                  EditMonthlyUsageScreen.routeName: (ctx) =>
-                      EditMonthlyUsageScreen(),
+                  EditMonthlyUsageScreen.routeName: (ctx) => EditMonthlyUsageScreen(),
+                  StatsScreen.routeName: (ctx) => StatsScreen(),
                 },
                 debugShowCheckedModeBanner: false);
           }
