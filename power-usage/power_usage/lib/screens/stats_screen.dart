@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:get_it/get_it.dart';
+import '../state/usages.dart';
 
 class StatsScreen extends StatefulWidget {
   static const String routeName = "/stats";
@@ -9,9 +11,23 @@ class StatsScreen extends StatefulWidget {
 }
 
 class _State extends State<StatsScreen> {
+  final usageService = GetIt.instance.get<UsageService>();
   final List<charts.Series<Consumption, String>> seriesList =
       _createSampleData();
   final bool animate = true;
+
+  Future<void> fetchYearlyUsages() async {
+    usageService.yearlyUsages.listen((usages) {
+      print(usages);
+    });
+    usageService.fetchUsagesForYears();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchYearlyUsages();
+  }
 
   @override
   Widget build(BuildContext context) {

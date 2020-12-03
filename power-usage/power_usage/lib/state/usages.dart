@@ -9,9 +9,11 @@ class UsageService {
       BehaviorSubject.seeded(Usage.empty());
   final BehaviorSubject<bool> _monthUsageIsLoading =
       BehaviorSubject.seeded(false);
+  final BehaviorSubject<List<Usage>> _yearlyUsages = BehaviorSubject.seeded([]);
 
   Stream<Usage> get monthUsage => _monthUsage.stream;
   Stream<bool> get monthUsageIsLoading => _monthUsageIsLoading.stream;
+  Stream<List<Usage>> get yearlyUsages => _yearlyUsages.stream;
 
   Future<void> fetchUsageForMonth(int year, int month) async {
     _monthUsageIsLoading.add(true);
@@ -30,6 +32,17 @@ class UsageService {
     _monthUsage.add(usage);
 
     _monthUsageIsLoading.add(false);
+  }
+
+  Future<void> fetchUsagesForYears() async {
+    const List<int> years = [2019, 2020];
+
+    var queryResult = await usages.where("year", whereIn: years).get();
+
+    var allUsages =
+        queryResult.docs.map((doc) => Usage.fromFirestore(doc)).toList();
+
+    _yearlyUsages.add(allUsages);
   }
 
   Future<void> saveMonthlyUsage(Usage usage) async {

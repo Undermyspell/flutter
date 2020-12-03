@@ -295,13 +295,11 @@ class MonthPickerFormField extends FormField<DateTime> {
       {BuildContext context,
       FormFieldSetter<DateTime> onSaved,
       FormFieldValidator<DateTime> validator,
-      DateTime initialValue,
-      bool autovalidate = false})
+      DateTime initialValue})
       : super(
             onSaved: onSaved,
             validator: validator,
             initialValue: initialValue,
-            autovalidate: autovalidate,
             builder: (FormFieldState<DateTime> state) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
