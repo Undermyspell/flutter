@@ -4,10 +4,17 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "power_usage",
             "request": "launch",
             "type": "dart"
-        }
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "firebase functions",
+            "port": 5001
+          }
     ]
 }
