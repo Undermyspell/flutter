@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:power_usage/screens/stats_screen.dart';
@@ -16,11 +17,18 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  // final Future<UserCredential> _login = FirebaseAuth.instance.signInAnonymously();
+
+  Future<bool> setup() async {
+    await _initialization;
+    await FirebaseAuth.instance.signInAnonymously();
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _initialization,
+        future: setup(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return FirebaseError();
