@@ -32,7 +32,20 @@ class Usage {
         consumptionGridSonnenApp: data['consumptionGridSonnenApp'] != null ? double.parse(data['consumptionGridSonnenApp'].toString()) : 0,
         consumptionHeating: data['consumptionHeating'] != null ? double.parse(data['consumptionHeating'].toString()) : 0,
         consumptionWarmWater: data['consumptionWarmWater'] != null ? double.parse(data['consumptionWarmWater'].toString()) : 0,
-        year: data['year'] ?? '',
-        month: data['month'] ?? '');
+        year: data['year'] ?? 0,
+        month: data['month'] ?? 0);
+  }
+
+  factory Usage.fromFirestoreYearlySum(DocumentSnapshot doc) {
+    Map data = doc.data();
+    return Usage(
+        counterMeterConsumption: data['sumCounterMeterConsumption'] != null ? double.parse(data['sumCounterMeterConsumption'].toString()) : 0,
+        counterMeterFeedIn: data['sumCounterMeterFeedIn'] != null ? double.parse(data['sumCounterMeterFeedIn'].toString()) : 0,
+        consumptionSonnenApp: data['sumConsumptionSonnenApp'] != null ? double.parse(data['sumConsumptionSonnenApp'].toString()) : 0,
+        consumptionGridSonnenApp: data['sumConsumptionGridSonnenApp'] != null ? double.parse(data['sumConsumptionGridSonnenApp'].toString()) : 0,
+        consumptionHeating: data['sumConsumptionHeating'] != null ? double.parse(data['sumConsumptionHeating'].toString()) : 0,
+        consumptionWarmWater: data['sumConsumptionWarmWater'] != null ? double.parse(data['sumConsumptionWarmWater'].toString()) : 0,
+        year: data['year'] ?? 0,
+        month: 0);
   }
 }

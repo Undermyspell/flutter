@@ -77,7 +77,7 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
         ),
       ),
       floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
+          FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,

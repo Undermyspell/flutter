@@ -17,7 +17,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-  // final Future<UserCredential> _login = FirebaseAuth.instance.signInAnonymously();
 
   Future<bool> setup() async {
     await _initialization;

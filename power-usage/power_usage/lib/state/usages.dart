@@ -4,16 +4,17 @@ import '../models/usage.dart';
 
 class UsageService {
   CollectionReference usages = FirebaseFirestore.instance.collection('usages');
+  CollectionReference yearlySums = FirebaseFirestore.instance.collection('yearlysums');
 
   final BehaviorSubject<Usage> _monthUsage =
       BehaviorSubject.seeded(Usage.empty());
   final BehaviorSubject<bool> _monthUsageIsLoading =
       BehaviorSubject.seeded(false);
-  final BehaviorSubject<List<Usage>> _yearlyUsages = BehaviorSubject.seeded([]);
+  final BehaviorSubject<List<Usage>> _yearSums = BehaviorSubject.seeded([]);
 
   Stream<Usage> get monthUsage => _monthUsage.stream;
   Stream<bool> get monthUsageIsLoading => _monthUsageIsLoading.stream;
-  Stream<List<Usage>> get yearlyUsages => _yearlyUsages.stream;
+  Stream<List<Usage>> get yearlyUsages => _yearSums.stream;
 
   Future<void> fetchUsageForMonth(int year, int month) async {
     _monthUsageIsLoading.add(true);
@@ -37,12 +38,12 @@ class UsageService {
   Future<void> fetchUsagesForYears() async {
     const List<int> years = [2019, 2020];
 
-    var queryResult = await usages.where("year", whereIn: years).get();
+    var queryResult = await yearlySums.where("year", whereIn: years).get();
 
-    var allUsages =
-        queryResult.docs.map((doc) => Usage.fromFirestore(doc)).toList();
+    var yearSums =
+        queryResult.docs.map((doc) => Usage.fromFirestoreYearlySum(doc)).toList();
 
-    _yearlyUsages.add(allUsages);
+    _yearSums.add(yearSums);
   }
 
   Future<void> saveMonthlyUsage(Usage usage) async {

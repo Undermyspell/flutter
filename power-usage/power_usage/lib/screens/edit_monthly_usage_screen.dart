@@ -21,8 +21,10 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
   final focusConsumptionSonnenApp = FocusNode();
   final focusConsumptionWarmWater = FocusNode();
   final focusConsumptionGridSonnenApp = FocusNode();
+  bool _datePicked = false;
 
   setDate(DateTime date) {
+    _datePicked = true;
     _editedUsage = Usage(
         consumptionGridSonnenApp: _editedUsage.consumptionGridSonnenApp,
         consumptionHeating: _editedUsage.consumptionHeating,
@@ -247,12 +249,12 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                     context: context,
                     onSaved: setDate,
                     validator: (value) {
-                      if (value.year == 1900) {
+                      if (!_datePicked) {
                         return "Bitte einen Monat wählen";
                       }
                       return null;
                     },
-                    initialValue: DateTime(1900),
+                    initialValue: DateTime.now(),
                   ),
                   SizedBox(
                     height: 10,
