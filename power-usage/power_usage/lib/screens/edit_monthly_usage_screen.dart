@@ -24,7 +24,6 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
   bool _datePicked = false;
 
   setDate(DateTime date) {
-    _datePicked = true;
     _editedUsage = Usage(
         consumptionGridSonnenApp: _editedUsage.consumptionGridSonnenApp,
         consumptionHeating: _editedUsage.consumptionHeating,
@@ -95,6 +94,11 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: "Verbrauch Zählerstand 1. des Monats:",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
                     ),
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
@@ -116,9 +120,17 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                     onFieldSubmitted: (v) => FocusScope.of(context)
                         .requestFocus(focusCounterMeterFeedIn),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: "Einspeisung Zählerstand 1. des Monats:",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
                     ),
                     textInputAction: TextInputAction.next,
                     focusNode: focusCounterMeterFeedIn,
@@ -142,9 +154,17 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                     onFieldSubmitted: (v) => FocusScope.of(context)
                         .requestFocus(focusConsumptionHeating),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: "Verbrauch Heizung:",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
                     ),
                     focusNode: focusConsumptionHeating,
                     textInputAction: TextInputAction.next,
@@ -168,9 +188,17 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                     onFieldSubmitted: (v) => FocusScope.of(context)
                         .requestFocus(focusConsumptionWarmWater),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: "Verbrauch Warmwasser:",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
                     ),
                     focusNode: focusConsumptionWarmWater,
                     textInputAction: TextInputAction.next,
@@ -193,9 +221,17 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                     onFieldSubmitted: (v) => FocusScope.of(context)
                         .requestFocus(focusConsumptionSonnenApp),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: "Verbrauch Sonnen App:",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
                     ),
                     focusNode: focusConsumptionSonnenApp,
                     textInputAction: TextInputAction.next,
@@ -218,9 +254,17 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                     onFieldSubmitted: (v) => FocusScope.of(context)
                         .requestFocus(focusConsumptionGridSonnenApp),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: "Netzbezug Sonnen App:",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
                     ),
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
@@ -246,16 +290,16 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                     },
                   ),
                   MonthPickerFormField(
-                    context: context,
-                    onSaved: setDate,
-                    validator: (value) {
-                      if (!_datePicked) {
-                        return "Bitte einen Monat wählen";
-                      }
-                      return null;
-                    },
-                    initialValue: DateTime.now(),
-                  ),
+                      context: context,
+                      onSaved: setDate,
+                      validator: (value) {
+                        if (!_datePicked) {
+                          return "Bitte einen Monat wählen";
+                        }
+                        return null;
+                      },
+                      initialValue: DateTime.now(),
+                      onValueChange: (_) => _datePicked = true),
                   SizedBox(
                     height: 10,
                   ),
@@ -297,7 +341,8 @@ class MonthPickerFormField extends FormField<DateTime> {
       {BuildContext context,
       FormFieldSetter<DateTime> onSaved,
       FormFieldValidator<DateTime> validator,
-      DateTime initialValue})
+      DateTime initialValue,
+      void Function(DateTime) onValueChange})
       : super(
             onSaved: onSaved,
             validator: validator,
@@ -312,6 +357,7 @@ class MonthPickerFormField extends FormField<DateTime> {
                       final picked = await showMonthPicker(
                           context: context, initialDate: initialValue);
                       state.didChange(picked != null ? picked : prev);
+                      onValueChange(picked);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
@@ -323,7 +369,7 @@ class MonthPickerFormField extends FormField<DateTime> {
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 17,
                             ),
                           ),
                         ],

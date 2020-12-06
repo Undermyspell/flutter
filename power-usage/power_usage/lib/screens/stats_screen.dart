@@ -109,7 +109,7 @@ class _State extends State<StatsScreen> {
                 icon: Icon(Icons.home),
                 color: Colors.white,
                 onPressed: () {
-                  Navigator.of(context).pushNamed(MonthlyUsageScreen.routeName);
+                  Navigator.of(context).pushNamedAndRemoveUntil(MonthlyUsageScreen.routeName, (r) => false);
                 },
               ),
             ],

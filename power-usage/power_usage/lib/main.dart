@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.done) {
-            getIt.registerSingleton<UsageService>(UsageService());
+            if (!getIt.isRegistered<UsageService>()) {
+              getIt.registerSingleton<UsageService>(UsageService());
+            }
             return MaterialApp(
                 title: "Stromverbrauch für Monate",
                 theme: ThemeData(
@@ -44,7 +46,8 @@ class MyApp extends StatelessWidget {
                 home: MonthlyUsageScreen(),
                 routes: {
                   MonthlyUsageScreen.routeName: (ctx) => MonthlyUsageScreen(),
-                  EditMonthlyUsageScreen.routeName: (ctx) => EditMonthlyUsageScreen(),
+                  EditMonthlyUsageScreen.routeName: (ctx) =>
+                      EditMonthlyUsageScreen(),
                   StatsScreen.routeName: (ctx) => StatsScreen(),
                 },
                 debugShowCheckedModeBanner: false);

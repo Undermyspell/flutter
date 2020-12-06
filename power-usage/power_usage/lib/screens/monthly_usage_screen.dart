@@ -77,7 +77,7 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
         ),
       ),
       floatingActionButtonLocation:
-          FloatingActionButtonLocation.endFloat,
+          FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
@@ -89,19 +89,14 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
         backgroundColor: Theme.of(context).accentColor,
       ),
       bottomNavigationBar: BottomAppBar(
+        clipBehavior: Clip.antiAlias,
+        shape: CircularNotchedRectangle(),
         child: Container(
           color: Theme.of(context).primaryColor,
           child: new Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.home),
-                color: Colors.white,
-                onPressed: () {
-                  Navigator.of(context).pushNamed(MonthlyUsageScreen.routeName);
-                },
-              ),
               IconButton(
                 icon: Icon(Icons.calendar_today),
                 color: Colors.white,
