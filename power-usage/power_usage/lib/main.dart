@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:power_usage/screens/stats_screen.dart';
 import 'package:power_usage/screens/year_overview_screen.dart';
+import 'package:power_usage/widgets/firebase_error.dart';
+import 'package:power_usage/widgets/firebase_loading.dart';
 import './screens/edit_monthly_usage_screen.dart';
 import './state/usages.dart';
 import './screens/monthly_usage_screen.dart';
@@ -55,51 +57,5 @@ class MyApp extends StatelessWidget {
           }
           return FirebaseLoading();
         });
-  }
-}
-
-class FirebaseLoading extends StatelessWidget {
-  const FirebaseLoading({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Container(
-        decoration: new BoxDecoration(color: Colors.white),
-        child: Center(
-          child: Icon(
-            Icons.timelapse,
-            size: 150,
-            color: Color.fromRGBO(38, 47, 92, 1),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class FirebaseError extends StatelessWidget {
-  const FirebaseError({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Container(
-        decoration: new BoxDecoration(color: Colors.white),
-        child: Center(
-          child: Icon(
-            Icons.error,
-            size: 150,
-            color: Color.fromRGBO(38, 47, 92, 1),
-          ),
-        ),
-      ),
-    );
   }
 }
