@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:power_usage/screens/stats_screen.dart';
+import 'package:power_usage/screens/year_overview_screen.dart';
 import './screens/edit_monthly_usage_screen.dart';
 import './state/usages.dart';
 import './screens/monthly_usage_screen.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
                     primaryColor: Color.fromRGBO(38, 47, 92, 1),
                     accentColor: Color.fromRGBO(255, 28, 146, 1),
                     fontFamily: "Montserrat"),
-                home: MonthlyUsageScreen(),
+                home: YearOverviewScreen(),
                 routes: {
                   MonthlyUsageScreen.routeName: (ctx) => MonthlyUsageScreen(),
                   EditMonthlyUsageScreen.routeName: (ctx) =>
