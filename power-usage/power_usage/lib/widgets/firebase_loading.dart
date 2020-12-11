@@ -15,7 +15,7 @@ class FirebaseLoading extends StatelessWidget {
           child: Icon(
             Icons.timelapse,
             size: 150,
-            color: Color.fromRGBO(38, 47, 92, 1),
+            color: Color(0xFF588da8),
           ),
         ),
       ),

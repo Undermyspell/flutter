@@ -362,8 +362,13 @@ class MonthPickerFormField extends FormField<DateTime> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.calendar_today),
+                          Icon(
+                            Icons.calendar_today,
+                            size: 30,
+                          ),
+                          SizedBox(width: 5),
                           Text(
                             DateFormat('MMMM yyyy').format(state.value),
                             overflow: TextOverflow.ellipsis,

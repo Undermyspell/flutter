@@ -3,6 +3,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:get_it/get_it.dart';
 import 'package:power_usage/models/usage.dart';
 import 'package:power_usage/models/usage_stats.dart';
+import 'package:power_usage/screens/year_overview_screen.dart';
 import '../state/usages.dart';
 import 'monthly_usage_screen.dart';
 
@@ -109,8 +110,14 @@ class _State extends State<StatsScreen> {
                 icon: Icon(Icons.home),
                 color: Colors.white,
                 onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(MonthlyUsageScreen.routeName, (r) => false);
+                  Navigator.of(context).pushNamedAndRemoveUntil(YearOverviewScreen.routeName, (r) => false);
                 },
+              ),
+               IconButton(
+                icon: Icon(Icons.dashboard),
+                color: Colors.white,
+                onPressed: () => Navigator.of(context)
+                    .pushNamed(MonthlyUsageScreen.routeName),
               ),
             ],
           ),

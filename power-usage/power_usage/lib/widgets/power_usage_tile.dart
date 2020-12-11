@@ -106,7 +106,7 @@ class AnimatedCircleWithText extends StatelessWidget {
         child: CustomPaint(
           foregroundPainter: CirclesProgress(
             animation.value,
-            Color.fromRGBO(60, 68, 108, 1),
+            Color(0xFFa8d3da), //Color.fromRGBO(60, 68, 108, 1),
             Theme.of(context).accentColor,
           ),
           child: Center(

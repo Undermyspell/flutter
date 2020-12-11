@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:power_usage/screens/edit_monthly_usage_screen.dart';
 import 'package:power_usage/screens/stats_screen.dart';
+import 'package:power_usage/screens/year_overview_screen.dart';
 import '../widgets/power_usage_tiles.dart';
 import '../state/usages.dart';
 
@@ -76,8 +77,7 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
           ),
         ),
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
@@ -98,6 +98,14 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               IconButton(
+                icon: Icon(Icons.home),
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      YearOverviewScreen.routeName, (r) => false);
+                },
+              ),
+              IconButton(
                 icon: Icon(Icons.calendar_today),
                 color: Colors.white,
                 onPressed: () async {
@@ -111,6 +119,9 @@ class _MonthlyUsageScreenState extends State<MonthlyUsageScreen> {
                 color: Colors.white,
                 onPressed: () =>
                     Navigator.of(context).pushNamed(StatsScreen.routeName),
+              ),
+              SizedBox(
+                width: 30,
               )
             ],
           ),
