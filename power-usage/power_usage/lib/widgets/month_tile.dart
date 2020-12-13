@@ -5,10 +5,12 @@ class MonthTile extends StatelessWidget {
     Key key,
     @required this.months,
     @required this.i,
+    @required this.color,
   }) : super(key: key);
 
   final List<int> months;
   final int i;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class MonthTile extends StatelessWidget {
             color: Colors.white.withOpacity(.5),
           ),
           // borderRadius: BorderRadius.circular(50),
-          color: i % 2 == 0 ? Color(0xFF5aa469) : Color(0xFFd35d6e),//Theme.of(context).primaryColor,
+          color: color, // i % 2 == 0 ? Color(0xFF5aa469) : Color(0xFFd35d6e),//Theme.of(context).primaryColor,
           // boxShadow: [
           //   BoxShadow(
           //     color: Theme.of(context).primaryColor.withOpacity(.5),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:power_usage/screens/monthly_usage_screen.dart';
 import 'package:power_usage/screens/stats_screen.dart';
 import 'package:power_usage/widgets/month_tile.dart';
+import '../state/usages.dart';
 
 class YearOverviewScreen extends StatefulWidget {
   static const String routeName = "/yearsoverview";
@@ -12,13 +14,25 @@ class YearOverviewScreen extends StatefulWidget {
 }
 
 class _YearOverviewScreenState extends State<YearOverviewScreen> {
+  final usageService = GetIt.instance.get<UsageService>();
   DateTime datePicked = DateTime.now();
   List<int> months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
+  Future<void> fetchExistingMonthsForYear(int year) async {
+    await usageService.fetchExistingMonthsForYear(year);
+  }
+
   setDate(DateTime date) {
+    fetchExistingMonthsForYear(date.year);
     setState(() {
       datePicked = date;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchExistingMonthsForYear(datePicked.year);
   }
 
   @override
@@ -27,25 +41,46 @@ class _YearOverviewScreenState extends State<YearOverviewScreen> {
       appBar: AppBar(
         title: Text("Monatliche Übersicht"),
       ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 3,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                children: [
-                  for (var i in months) MonthTile(months: months, i: i),
-                ],
-              ),
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          StreamBuilder<bool>(
+              stream: usageService.existingMonthsForYearLoading,
+              builder: (context, snapshot) {
+                return !snapshot.hasData
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          backgroundColor: Theme.of(context).primaryColor,
+                        ),
+                      )
+                    : StreamBuilder<List<int>>(
+                        stream: usageService.existingMonthsForYear,
+                        builder: (context, snapshot) {
+                          return snapshot.hasData
+                              ? Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: GridView.count(
+                                    shrinkWrap: true,
+                                    crossAxisCount: 3,
+                                    crossAxisSpacing: 20,
+                                    mainAxisSpacing: 20,
+                                    children: [
+                                      for (var i in months)
+                                        MonthTile(
+                                          months: months,
+                                          i: i,
+                                          color: snapshot.data.contains(i)
+                                              ? Color(0xFF5aa469)
+                                              : Color(0xFFd35d6e),
+                                        ),
+                                    ],
+                                  ),
+                                )
+                              : Container();
+                        });
+              }),
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(

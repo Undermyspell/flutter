@@ -4,17 +4,24 @@ import '../models/usage.dart';
 
 class UsageService {
   CollectionReference usages = FirebaseFirestore.instance.collection('usages');
-  CollectionReference yearlySums = FirebaseFirestore.instance.collection('yearlysums');
+  CollectionReference yearlySums =
+      FirebaseFirestore.instance.collection('yearlysums');
 
   final BehaviorSubject<Usage> _monthUsage =
       BehaviorSubject.seeded(Usage.empty());
   final BehaviorSubject<bool> _monthUsageIsLoading =
+      BehaviorSubject.seeded(false);
+  final BehaviorSubject<List<int>> _existingMonthsForYear =
+      BehaviorSubject.seeded(List<int>());
+  final BehaviorSubject<bool> _existingMonthsForYearLoading =
       BehaviorSubject.seeded(false);
   final BehaviorSubject<List<Usage>> _yearSums = BehaviorSubject.seeded([]);
 
   Stream<Usage> get monthUsage => _monthUsage.stream;
   Stream<bool> get monthUsageIsLoading => _monthUsageIsLoading.stream;
   Stream<List<Usage>> get yearlyUsages => _yearSums.stream;
+  Stream<bool> get existingMonthsForYearLoading => _existingMonthsForYearLoading.stream;
+  Stream<List<int>> get existingMonthsForYear => _existingMonthsForYear.stream;
 
   Future<void> fetchUsageForMonth(int year, int month) async {
     _monthUsageIsLoading.add(true);
@@ -40,10 +47,26 @@ class UsageService {
 
     var queryResult = await yearlySums.where("year", whereIn: years).get();
 
-    var yearSums =
-        queryResult.docs.map((doc) => Usage.fromFirestoreYearlySum(doc)).toList();
+    var yearSums = queryResult.docs
+        .map((doc) => Usage.fromFirestoreYearlySum(doc))
+        .toList();
 
     _yearSums.add(yearSums);
+  }
+
+  Future<void> fetchExistingMonthsForYear(int year) async {
+    _existingMonthsForYearLoading.add(true);
+
+    var queryResult = await usages.where("year", isEqualTo: year).get();
+
+    var existingMonths = queryResult.docs
+        .map((doc) => Usage.fromFirestore(doc))
+        .map((usage) => usage.month)
+        .toList();
+
+    _existingMonthsForYear.add(existingMonths);
+
+    _existingMonthsForYearLoading.add(false);
   }
 
   Future<void> saveMonthlyUsage(Usage usage) async {
