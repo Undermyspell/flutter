@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:power_usage/screens/monthly_usage_screen.dart';
 import 'package:power_usage/screens/stats_screen.dart';
+import 'package:power_usage/widgets/month_grid.dart';
 import 'package:power_usage/widgets/month_tile.dart';
 import '../state/usages.dart';
 
@@ -54,31 +55,7 @@ class _YearOverviewScreenState extends State<YearOverviewScreen> {
                           backgroundColor: Theme.of(context).primaryColor,
                         ),
                       )
-                    : StreamBuilder<List<int>>(
-                        stream: usageService.existingMonthsForYear,
-                        builder: (context, snapshot) {
-                          return snapshot.hasData
-                              ? Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: GridView.count(
-                                    shrinkWrap: true,
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: 20,
-                                    mainAxisSpacing: 20,
-                                    children: [
-                                      for (var i in months)
-                                        MonthTile(
-                                          months: months,
-                                          i: i,
-                                          color: snapshot.data.contains(i)
-                                              ? Color(0xFF5aa469)
-                                              : Color(0xFFd35d6e),
-                                        ),
-                                    ],
-                                  ),
-                                )
-                              : Container();
-                        });
+                    : MonthGrid(usageService: usageService, months: months);
               }),
         ],
       ),
