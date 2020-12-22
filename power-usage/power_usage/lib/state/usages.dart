@@ -70,7 +70,7 @@ class UsageService {
   }
 
   Future<void> saveMonthlyUsage(Usage usage) async {
-    return usages.add({
+    return usages.doc(usage.month.toString()).set({
       "consumptionGridSonnenApp": usage.consumptionGridSonnenApp,
       "consumptionHeating": usage.consumptionHeating,
       "consumptionSonnenApp": usage.consumptionSonnenApp,

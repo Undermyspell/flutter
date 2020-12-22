@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:power_usage/routearguments/monthargument.dart';
 import '../models/usage.dart';
 import '../state/usages.dart';
 
@@ -79,6 +80,9 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final MonthArgument monthArgument =
+        ModalRoute.of(context).settings.arguments;
+    _datePicked = monthArgument != null;
     return Scaffold(
       appBar: AppBar(
         title: Text("Monatsverbrauch bearbeiten"),
@@ -298,7 +302,9 @@ class _EditMonthlyUsageScreenState extends State<EditMonthlyUsageScreen> {
                         }
                         return null;
                       },
-                      initialValue: DateTime.now(),
+                      initialValue: monthArgument != null
+                          ? DateTime(monthArgument.year, monthArgument.month)
+                          : DateTime.now(),
                       onValueChange: (_) => _datePicked = true),
                   SizedBox(
                     height: 10,

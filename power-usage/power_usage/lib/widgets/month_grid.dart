@@ -6,10 +6,12 @@ class MonthGrid extends StatelessWidget {
   const MonthGrid({
     Key key,
     @required this.usageService,
+    @required this.year,
     @required this.months,
   }) : super(key: key);
 
   final UsageService usageService;
+  final int year;
   final List<int> months;
 
   @override
@@ -28,6 +30,7 @@ class MonthGrid extends StatelessWidget {
                     children: [
                       for (var i in months)
                         MonthTile(
+                          year: year,
                           months: months,
                           i: i,
                           color: snapshot.data.contains(i)

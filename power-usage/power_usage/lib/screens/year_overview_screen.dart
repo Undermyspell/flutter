@@ -5,7 +5,6 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:power_usage/screens/monthly_usage_screen.dart';
 import 'package:power_usage/screens/stats_screen.dart';
 import 'package:power_usage/widgets/month_grid.dart';
-import 'package:power_usage/widgets/month_tile.dart';
 import '../state/usages.dart';
 
 class YearOverviewScreen extends StatefulWidget {
@@ -42,22 +41,30 @@ class _YearOverviewScreenState extends State<YearOverviewScreen> {
       appBar: AppBar(
         title: Text("Monatliche Übersicht"),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          StreamBuilder<bool>(
-              stream: usageService.existingMonthsForYearLoading,
-              builder: (context, snapshot) {
-                return !snapshot.hasData
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          backgroundColor: Theme.of(context).primaryColor,
-                        ),
-                      )
-                    : MonthGrid(usageService: usageService, months: months);
-              }),
-        ],
+      body: RefreshIndicator(
+        backgroundColor: Theme.of(context).accentColor,
+        color: Colors.white,
+        onRefresh: () => fetchExistingMonthsForYear(datePicked.year),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            StreamBuilder<bool>(
+                stream: usageService.existingMonthsForYearLoading,
+                builder: (context, snapshot) {
+                  return !snapshot.hasData
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Theme.of(context).primaryColor,
+                          ),
+                        )
+                      : MonthGrid(
+                          usageService: usageService,
+                          year: this.datePicked.year,
+                          months: months);
+                }),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
@@ -96,7 +103,7 @@ class _YearOverviewScreenState extends State<YearOverviewScreen> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          DateFormat('MMMM yyyy').format(datePicked),
+                          DateFormat('yyyy').format(datePicked),
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
                           style: TextStyle(

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:power_usage/routearguments/monthargument.dart';
+import 'package:power_usage/screens/edit_monthly_usage_screen.dart';
 
 class MonthTile extends StatelessWidget {
   const MonthTile({
     Key key,
+    @required this.year,
     @required this.months,
     @required this.i,
     @required this.color,
   }) : super(key: key);
 
+  final int year;
   final List<int> months;
   final int i;
   final Color color;
@@ -33,7 +37,8 @@ class MonthTile extends StatelessWidget {
             color: Colors.white.withOpacity(.5),
           ),
           // borderRadius: BorderRadius.circular(50),
-          color: color, // i % 2 == 0 ? Color(0xFF5aa469) : Color(0xFFd35d6e),//Theme.of(context).primaryColor,
+          color:
+              color, // i % 2 == 0 ? Color(0xFF5aa469) : Color(0xFFd35d6e),//Theme.of(context).primaryColor,
           // boxShadow: [
           //   BoxShadow(
           //     color: Theme.of(context).primaryColor.withOpacity(.5),
@@ -44,7 +49,10 @@ class MonthTile extends StatelessWidget {
           // ],
         ),
       ),
-      onTap: () => print(i),
+      onTap: () => Navigator.of(context).pushNamed(
+        EditMonthlyUsageScreen.routeName,
+        arguments: MonthArgument(year, i),
+      ),
     );
   }
 }
